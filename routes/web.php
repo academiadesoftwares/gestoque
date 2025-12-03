@@ -7,14 +7,19 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\FinanceiroController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\MarketingController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserStatusController;
+use App\Http\Controllers\VendaController;
 use Illuminate\Support\Facades\Route;
 
 // Página inicial do site
@@ -47,6 +52,115 @@ Route::post('/reset-password', [ForgotPasswordController::class, 'reset'])->name
 Route::group(['middleware' => 'auth'], function () {
     // Página inicial do administrativo
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index')->middleware('permission:dashboard');
+
+    // GESTÃO DO PRODUTO
+    Route::prefix('produto')->group(function () {
+        Route::get('/', [ProdutoController::class, 'index'])->name('produto.index')->middleware('permission:index-produto');
+        Route::get('/create', [ProdutoController::class, 'create'])->name('produto.create')->middleware('permission:create-produto');
+        Route::get('/{produto}', [ProdutoController::class, 'show'])->name('produto.show')->middleware('permission:show-produto');
+        Route::post('/', [ProdutoController::class, 'store'])->name('produto.store')->middleware('permission:create-produto');
+        Route::get('/{produto}/edit', [ProdutoController::class, 'edit'])->name('produto.edit')->middleware('permission:edit-produto');
+        Route::put('/{produto}', [ProdutoController::class, 'update'])->name('produto.update')->middleware('permission:edit-produto');
+        Route::delete('/{produto}', [ProdutoController::class, 'destroy'])->name('produto.destroy')->middleware('permission:destroy-produto');
+
+        Route::get('/pdf-show-produto/{produto}', [ProdutoController::class, 'showPdfProduto'])->name('produtos.pdf-show-produto')->middleware('permission:pdf-show-produto');
+        Route::get('/pdf-index-produtos/produtos', [ProdutoController::class, 'pdfIndexProdutos'])->name('produtos.pdf-index-produtos')->middleware('permission:pdf-index-produtos');
+
+        Route::get('/csv-index/produtos', [ProdutoController::class, 'csvIndexprodutos'])->name('produtos.csv-index-produtos')->middleware('permission:csv-index-produtos');
+    });
+
+    // ===================== GESTÃO DE CLIENTES =====================
+    Route::prefix('cliente')->group(function () {
+        Route::get('/', [ClienteController::class, 'index'])->name('cliente.index')->middleware('permission:index-cliente');
+        Route::get('/create', [ClienteController::class, 'create'])
+            ->name('cliente.create')->middleware('permission:create-cliente');
+        Route::post('/', [ClienteController::class, 'store'])
+            ->name('cliente.store')->middleware('permission:create-cliente');
+        Route::get('/{cliente}', [ClienteController::class, 'show'])
+            ->name('cliente.show')->middleware('permission:show-cliente');
+        Route::get('/{cliente}/edit', [ClienteController::class, 'edit'])
+            ->name('cliente.edit')->middleware('permission:edit-cliente');
+        Route::put('/{cliente}', [ClienteController::class, 'update'])
+            ->name('cliente.update')->middleware('permission:edit-cliente');
+        Route::delete('/{cliente}', [ClienteController::class, 'destroy'])
+            ->name('cliente.destroy')->middleware('permission:destroy-cliente');
+    });
+
+    // ===================== GESTÃO DE VENDAS =====================
+    Route::prefix('venda')->group(function () {
+        Route::get('/', [VendaController::class, 'index'])
+            ->name('venda.index')->middleware('permission:index-venda');
+        Route::get('/create', [VendaController::class, 'create'])
+            ->name('venda.create')->middleware('permission:create-venda');
+        Route::post('/', [VendaController::class, 'store'])
+            ->name('venda.store')->middleware('permission:create-venda');
+        Route::get('/{venda}', [VendaController::class, 'show'])
+            ->name('venda.show')->middleware('permission:show-venda');
+        Route::get('/{venda}/edit', [VendaController::class, 'edit'])
+            ->name('venda.edit')->middleware('permission:edit-venda');
+        Route::put('/{venda}', [VendaController::class, 'update'])
+            ->name('venda.update')->middleware('permission:edit-venda');
+        Route::delete('/{venda}', [VendaController::class, 'destroy'])
+            ->name('venda.destroy')->middleware('permission:destroy-venda');
+    });
+
+    // ===================== GESTÃO FINANCEIRA =====================
+    Route::prefix('financeiro')->group(function () {
+        Route::get('/', [FinanceiroController::class, 'index'])
+            ->name('financeiro.index')->middleware('permission:index-financeiro');
+        Route::get('/create', [FinanceiroController::class, 'create'])
+            ->name('financeiro.create')->middleware('permission:create-financeiro');
+        Route::post('/', [FinanceiroController::class, 'store'])
+            ->name('financeiro.store')->middleware('permission:create-financeiro');
+        Route::get('/{financeiro}', [FinanceiroController::class, 'show'])
+            ->name('financeiro.show')->middleware('permission:show-financeiro');
+        Route::get('/{financeiro}/edit', [FinanceiroController::class, 'edit'])
+            ->name('financeiro.edit')->middleware('permission:edit-financeiro');
+        Route::put('/{financeiro}', [FinanceiroController::class, 'update'])
+            ->name('financeiro.update')->middleware('permission:edit-financeiro');
+        Route::delete('/{financeiro}', [FinanceiroController::class, 'destroy'])
+            ->name('financeiro.destroy')->middleware('permission:destroy-financeiro');
+    });
+
+    // ===================== GESTÃO DE MARKETING =====================
+    Route::prefix('marketing')->group(function () {
+        Route::get('/', [MarketingController::class, 'index'])
+            ->name('marketing.index')->middleware('permission:index-marketing');
+        Route::get('/create', [MarketingController::class, 'create'])
+            ->name('marketing.create')->middleware('permission:create-marketing');
+        Route::post('/', [MarketingController::class, 'store'])
+            ->name('marketing.store')->middleware('permission:create-marketing');
+        Route::get('/{marketing}', [MarketingController::class, 'show'])
+            ->name('marketing.show')->middleware('permission:show-marketing');
+        Route::get('/{marketing}/edit', [MarketingController::class, 'edit'])
+            ->name('marketing.edit')->middleware('permission:edit-marketing');
+        Route::put('/{marketing}', [MarketingController::class, 'update'])
+            ->name('marketing.update')->middleware('permission:edit-marketing');
+        Route::delete('/{marketing}', [MarketingController::class, 'destroy'])
+            ->name('marketing.destroy')->middleware('permission:destroy-marketing');
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Perfil
     Route::prefix('profile')->group(function () {

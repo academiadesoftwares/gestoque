@@ -1,7 +1,7 @@
 @extends('layouts.login')
 
 @section('content')
-    <h1 class="title-login">Área Restrita</h1>
+    <h1 class="title-login">Gráfica MIOP</h1>
 
     <x-alert />
 
@@ -30,15 +30,15 @@
             <button type="submit" class="btn-primary-md">Acessar</button>
         </div>
 
-        <div class="mt-4 text-center">
-            <a href="{{ route('register') }}" class="link-login">Criar nova conta!</a>
-        </div>
+     
+            <a href="{{ route('register') }}" class="link-login">Nova conta!</a>
+     
 
         <!-- Informações de login -->
-        <div class="mt-4 text-center text-sm text-gray-600">
+        <!--div class="mt-4 text-center text-sm text-gray-600">
             <p>Usuário: cesar@celke.com.br</p>
             <p>Senha: 123456A#</p>
-        </div>
+        </div-->
 
     </form>
 @endsection

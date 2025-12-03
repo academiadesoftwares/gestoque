@@ -95,11 +95,11 @@ class RoleSeeder extends Seeder
                 'index-role-permission',
             ]);
 
-            /******* Professor *******/
+            /******* Gestor *******/
             // Se não encontrar o registro, cadastra o registro no BD
             $teacher = Role::firstOrCreate(
-                ['name' => 'Professor'],
-                ['name' => 'Professor'],
+                ['name' => 'Gestor'],
+                ['name' => 'Gestor'],
             );
 
             // Cadastrar permissão para o papel
@@ -137,15 +137,15 @@ class RoleSeeder extends Seeder
                 'show-user',
             ]);
 
-            /******* Tutor *******/
+            /******* funcionario *******/
             // Se não encontrar o registro, cadastra o registro no BD
-            $tutor = Role::firstOrCreate(
-                ['name' => 'Tutor'],
-                ['name' => 'Tutor'],
+            $funcionario = Role::firstOrCreate(
+                ['name' => 'Funcionario'],
+                ['name' => 'Funcionario'],
             );
 
             // Cadastrar permissão para o papel
-            $tutor->givePermissionTo([
+            $funcionario->givePermissionTo([
                 'dashboard',
 
                 'index-course',
@@ -180,15 +180,15 @@ class RoleSeeder extends Seeder
                 'create-user',
             ]);
 
-            /******* Aluno *******/
+            /******* Cliente *******/
             // Se não encontrar o registro, cadastra o registro no BD
-            $student = Role::firstOrCreate(
-                ['name' => 'Aluno'],
-                ['name' => 'Aluno'],
+            $cliente = Role::firstOrCreate(
+                ['name' => 'Cliente'],
+                ['name' => 'Cliente'],
             );
 
             // Cadastrar permissão para o papel
-            $student->givePermissionTo([    
+            $cliente->givePermissionTo([    
                 'dashboard',
                             
                 'show-profile',

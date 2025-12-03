@@ -22,124 +22,147 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
-
+/* ---------------------------------------------------------
+| Variante personalizada para modo escuro
+---------------------------------------------------------- */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ---------------------------------------------------------
+| CAMADA COMPONENTS — Aqui ficam teus estilos customizados
+---------------------------------------------------------- */
 @layer components {
 
-    /****** Início Login ******/
-    /* Estilização do fundo */
+    /* ======================================================
+    | LOGIN
+    ======================================================= */
+
+    /* Fundo da página de login */
     .bg-login {
         @apply bg-gray-50 min-h-screen flex flex-col justify-center items-center dark:bg-zinc-950;
     }
 
-    /* Container principal do formulário */
+    /* Cartão do formulário */
     .card-login {
-        @apply bg-gray-100 mt-6 w-full overflow-hidden px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg dark:bg-zinc-900;
+        @apply bg-gray-100 mt-6 w-full overflow-hidden px-6 py-4 shadow-md 
+               sm:max-w-md sm:rounded-lg dark:bg-zinc-900;
     }
 
-    /* Wrapper da logo */
+    /* Container da logo */
     .logo-wrapper-login {
         @apply flex justify-center mb-4;
     }
 
-    /* Estilização da logo */
+    /* Imagem da logo */
     .logo-login {
         @apply h-20 w-20;
     }
 
-    /* Estilização do título */
+    /* Título da página de login */
     .title-login {
         @apply text-2xl font-semibold text-center text-red-500;
     }
 
-    /* Margem superior para os campos */
+    /* Margin top dos grupos */
     .form-group-login {
         @apply mt-4;
     }
 
-    /* Estilização do label */
+    /* Label dos inputs */
     .form-label-login {
         @apply text-gray-600 block text-sm font-medium dark:text-gray-400;
     }
 
-    /* Estilização do input */
+    /* Campos do formulário */
     .form-input-login {
-        @apply mt-1 block w-full rounded-md border-2 border-gray-200 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-200 focus:outline-none px-3 py-2 dark:border-gray-600 dark:text-gray-200 dark:placeholder-gray-400;
+        @apply mt-1 block w-full rounded-md border-2 border-gray-200 shadow-sm 
+               focus:border-gray-300 focus:ring focus:ring-gray-200 focus:outline-none
+               px-3 py-2 dark:border-gray-600 dark:text-gray-200 dark:placeholder-gray-400;
     }
 
-    /* Margem superior para o link e o botão */
+    /* Link + botão abaixo dos campos */
     .btn-group-login {
         @apply mt-4 flex items-center justify-between;
     }
 
-    /* Link da página de login */
+    /* Link “Esqueceu a senha?” */
     .link-login {
         @apply text-base text-red-500 hover:no-underline;
     }
 
-    /****** Fim Login ******/
 
-    /****** Início Navbar ******/
-    /* Estilização do fundo */
+    /* ======================================================
+    | NAVBAR
+    ======================================================= */
+
+    /* Fundo geral do dashboard */
     .bg-dashboard {
         @apply bg-gray-100 dark:bg-zinc-950;
     }
 
     /* Navbar */
     .navbar {
-        @apply bg-gray-50 border-b border-gray-200 px-4 py-2 sm:px-6 lg:px-8 dark:bg-zinc-900 dark:border-zinc-950;
+        @apply bg-gray-50 border-b border-gray-200 px-4 py-2 sm:px-6 lg:px-8 
+               dark:bg-zinc-900 dark:border-zinc-950;
     }
 
-    /* Botão de menu mobile */
+    /* Botão menu mobile */
     .menu-button {
         @apply text-red-600 sm:hidden cursor-pointer;
     }
 
-    /* Container da Navbar */
+    /* Container da navbar */
     .navbar-container {
         @apply flex justify-end items-center;
     }
 
-    /* Container do usuário */
+    /* Container do usuário/ avatar */
     .user-container {
         @apply ml-auto flex items-center space-x-0;
     }
 
-    /* Dropdown */
+    /* Botão do dropdown */
     .dropdown-button {
-        @apply bg-gray-50 px-3 py-2 text-sm text-gray-500 flex items-center cursor-pointer dark:bg-zinc-900 dark:text-gray-400;
+        @apply bg-gray-50 px-3 py-2 text-sm text-gray-500 flex items-center cursor-pointer
+               dark:bg-zinc-900 dark:text-gray-400;
     }
 
-    /* Dropdown border */
     .dropdown-button-border {
         @apply border-e-2 border-gray-300 dark:border-gray-600;
     }
 
+    /* Menu suspenso */
     .dropdown-content {
         @apply absolute right-0 z-50 mt-2 rounded-md shadow-lg bg-white w-48 dark:bg-zinc-800;
     }
 
     .dropdown-item {
-        @apply block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none hover:rounded-md dark:text-gray-400 dark:hover:bg-zinc-950 dark:focus:bg-gray-400; 
+        @apply block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100
+               focus:bg-gray-100 focus:outline-none hover:rounded-md
+               dark:text-gray-400 dark:hover:bg-zinc-950;
     }
 
-    /* Ícone do dropdown */
     .dropdown-icon {
         @apply ml-2 h-4 w-4;
     }
 
-    /****** Fim Navbar ******/
 
-    /****** Início Sidebar ******/
+    /* ======================================================
+    | SIDEBAR
+    ======================================================= */
+
+    /* Sidebar oculta no mobile */
     .sidebar {
-        @apply fixed inset-y-0 left-0 w-64 bg-white shadow-md transform -translate-x-full transition-transform duration-300 ease-in-out sm:translate-x-0;
+        @apply fixed inset-y-0 left-0 w-64 bg-white shadow-md 
+               transform -translate-x-full transition-transform duration-300 ease-in-out 
+               sm:translate-x-0;
     }
 
+    /* Classe que abre no mobile */
     .sidebar-open {
         @apply translate-x-0;
     }
 
+    /* Container da sidebar */
     .sidebar-container {
         @apply bg-gray-50 relative h-full dark:bg-zinc-900;
     }
@@ -160,27 +183,20 @@
         @apply mt-4;
     }
 
-    /* tipo de letra so sidebar-link usuado nos menus do administrativo */
     .sidebar-link {
-        @apply px-4 py-2 
-        text-base /* text-sm	Pequeno  text-base	Normal text-lg	Médio */
-        text-gray-800  /* 800 texto escuro  500 texto castanho*/
-        hover:bg-gray-200 
-        hover:text-red-600 
-        flex items-center 
-        space-x-1 
-        dark:text-gray-400 
-        dark:hover:bg-zinc-950 
-        dark:hover:text-red-600;
+        @apply px-4 py-2 text-sm text-gray-500 hover:bg-gray-200 hover:text-red-600
+               flex items-center space-x-1 dark:text-gray-400 dark:hover:bg-zinc-950;
     }
 
     .sidebar-link.active {
-        @apply bg-gray-200 text-red-600 dark:bg-zinc-950 dark:text-red-600;
+        @apply bg-gray-200 text-red-600 dark:bg-zinc-950;
     }
 
-    /****** Fim Sidebar ******/
 
-    /****** Início Conteúdo Principal ******/
+    /* ======================================================
+    | CONTEÚDO PRINCIPAL
+    ======================================================= */
+
     .main-content {
         @apply flex-1 px-4 pb-4 pt-2 ml-0 sm:ml-64;
     }
@@ -225,15 +241,18 @@
         @apply bg-gray-50 text-sm p-4 dark:bg-zinc-900 dark:text-gray-400;
     }
 
-    /****** Fim Conteúdo Principal ******/
 
-    /****** Inicio Tabela Listar Registros ******/
+    /* ======================================================
+    | TABELAS
+    ======================================================= */
+
     .table-container {
         @apply overflow-hidden bg-white shadow-sm dark:bg-zinc-900;
     }
 
     .table {
-        @apply min-w-full divide-y divide-gray-200 border-separate border-spacing-0 dark:divide-zinc-950;
+        @apply min-w-full divide-y divide-gray-200 border-separate border-spacing-0 
+               dark:divide-zinc-950;
     }
 
     .table-row-header {
@@ -241,7 +260,8 @@
     }
 
     .table-header {
-        @apply px-6 py-3 text-left text-sm font-medium text-gray-500 tracking-wider border-b border-gray-200 dark:border-zinc-950 dark:text-gray-400;
+        @apply px-6 py-3 text-left text-sm font-medium text-gray-500 tracking-wider 
+               border-b border-gray-200 dark:border-zinc-950;
     }
 
     .table-header.center {
@@ -249,7 +269,8 @@
     }
 
     .table-body {
-        @apply px-6 py-2 text-sm text-gray-950 border-b border-gray-200 dark:text-gray-400 dark:border-zinc-950 break-all;
+        @apply px-6 py-2 text-sm text-gray-950 border-b border-gray-200 
+               dark:text-gray-400 dark:border-zinc-950 break-all;
     }
 
     .table-row-body {
@@ -257,113 +278,106 @@
     }
 
     .table-actions {
-        @apply px-6 py-2 text-sm text-gray-950 border-b border-gray-200 dark:text-gray-400 dark:border-zinc-950 text-center table-cell;
+        @apply px-6 py-2 text-sm text-gray-950 border-b border-gray-200 
+               dark:text-gray-400 dark:border-zinc-950 text-center;
     }
 
-    .table-actions-align{
+    .table-actions-align {
         @apply flex flex-row space-x-1 items-center justify-center;
     }
 
-    /* .table-actions a {
-        @apply inline-block;
-    } */
-
-    /* Ocultar os botões na tabela em dispositivos pequenos */
+    /* Esconde botões no mobile */
     .table-md-hidden {
         @apply hidden md:flex items-center space-x-1;
     }
 
-    /****** Fim Tabela Listar Registros ******/
-    
 
-    /****** Início Formulário Pesquisar ******/
+    /* ======================================================
+    | FORMULÁRIO DE PESQUISA
+    ======================================================= */
+
     .form-search {
         @apply pb-0 grid xl:grid-cols-5 md:grid-cols-2 gap-2 items-end;
     }
-    /****** Fim Formulário Pesquisar ******/
 
-    /****** Início Formulário ******/
 
-    /* Label dos inputs */
+    /* ======================================================
+    | FORMULÁRIOS
+    ======================================================= */
+
     .form-label {
         @apply text-gray-600 block text-sm font-semibold dark:text-gray-400;
     }
 
-    /* Input padrão */
     .form-input {
-        @apply border p-2 w-full mt-1 rounded-md border-gray-200 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-200 focus:outline-none dark:border-gray-600 dark:text-gray-200 dark:placeholder-gray-400;
+        @apply border p-2 w-full mt-1 rounded-md border-gray-200 shadow-sm
+               focus:border-gray-300 focus:ring focus:ring-gray-200 focus:outline-none
+               dark:border-gray-600 dark:text-gray-200 dark:placeholder-gray-400;
     }
 
-    /* Input checkbox */
     .form-input-checkbox {
         @apply text-sm text-gray-500 dark:text-gray-400;
     }
 
-    /****** Fim Formulário ******/
 
-    /****** Início Detalhes registro ******/
+    /* ======================================================
+    | DETALHES DO REGISTRO
+    ======================================================= */
 
-    /* Caixa para apresentar os detalhes do registro */
     .detail-box {
         @apply text-gray-700;
     }
 
-    /* Detalhes do registro */
     .title-detail-content {
         @apply font-semibold dark:text-gray-400;
     }
 
-    /* Detalhes do registro */
     .detail-content {
         @apply dark:text-gray-300;
     }
 
-    /****** Fim Detalhes registro ******/
 
-    /****** Início Botões ******/
-    /* Botão azul */
+    /* ======================================================
+    | BOTÕES
+    ======================================================= */
+
     .btn-primary {
-        @apply bg-blue-500 text-white text-sm px-2 py-1 rounded hover:bg-blue-600 transition-colors cursor-pointer;
+        @apply bg-blue-500 text-white text-sm px-2 py-1 rounded hover:bg-blue-600 cursor-pointer;
     }
 
-    /* Botão azul médio */
     .btn-primary-md {
-        @apply bg-blue-500 text-white text-base px-2 py-2 rounded hover:bg-blue-600 transition-colors cursor-pointer;
+        @apply bg-blue-500 text-white text-base px-2 py-2 rounded hover:bg-blue-600 cursor-pointer;
     }
 
-    /* Botão azul claro */
     .btn-info {
-        @apply bg-cyan-500 text-white text-sm px-2 py-1 rounded hover:bg-cyan-600 transition-colors cursor-pointer;
+        @apply bg-cyan-500 text-white text-sm px-2 py-1 rounded hover:bg-cyan-600 cursor-pointer;
     }
 
-    /* Botão verde */
     .btn-success {
-        @apply bg-green-500 text-white text-sm px-2 py-1 rounded hover:bg-green-600 transition-colors cursor-pointer;
+        @apply bg-green-500 text-white text-sm px-2 py-1 rounded hover:bg-green-600 cursor-pointer;
     }
 
-    /* Botão amarelo */
     .btn-warning {
-        @apply bg-yellow-500 text-white text-sm px-2 py-1 rounded hover:bg-yellow-600 transition-colors cursor-pointer;
+        @apply bg-yellow-500 text-white text-sm px-2 py-1 rounded hover:bg-yellow-600 cursor-pointer;
     }
 
-    /* Botão vermelho */
     .btn-danger {
-        @apply bg-red-500 text-white text-sm px-2 py-1 rounded hover:bg-red-600 transition-colors cursor-pointer;
+        @apply bg-red-500 text-white text-sm px-2 py-1 rounded hover:bg-red-600 cursor-pointer;
     }
 
-    /* Botão vermelho médio */
     .btn-danger-md {
-        @apply bg-red-500 text-white text-base px-2 py-2 rounded hover:bg-red-600 transition-colors cursor-pointer;
+        @apply bg-red-500 text-white text-base px-2 py-2 rounded hover:bg-red-600 cursor-pointer;
     }
 
-    /* Alinha os botões em linha */
     .align-icon-btn {
         @apply flex items-center space-x-1;
     }
 
-    /****** Fim Botões ******/
 
-    /****** Início Alertas ******/
+    /* ======================================================
+    | ALERTAS
+    ======================================================= */
+
     .alert-primary {
         @apply p-3 my-3 text-sm text-blue-800 rounded-lg bg-blue-100 border border-blue-200;
     }
@@ -384,9 +398,4 @@
         @apply p-3 my-3 text-sm text-red-800 rounded-lg bg-red-100 border border-red-200;
     }
 
-    /****** Fim Alertas ******/
-
-
-
 }
-

@@ -21,12 +21,12 @@ class UserSeeder extends Seeder
         // Capturar possíveis exceções durante a execução do seeder. 
         try {
             // Verificar se o usuário está cadastrado no banco de dados
-            if (!User::where('email', 'cesar@celke.com.br')->first()) {
+            if (!User::where('email', 'academiadesoftwares@gmail.com')->first()) {
                 // Cadastrar o usuário
                 $superAdmin = User::create([
-                    'name' => 'Cesar',
-                    'email' => 'cesar@celke.com.br',
-                    'password' => '123456A#',
+                    'name' => 'Academia de Softwares',
+                    'email' => 'academiadesoftwares@gmail.com',
+                    'password' => '123456a',
                 ]);
 
                 // Atribuir papel para o usuário
@@ -36,40 +36,50 @@ class UserSeeder extends Seeder
             if (App::environment() !== 'production') {
                 // Se não encontrar o registro com o e-mail, cadastra o registro no BD
                 $admin = User::firstOrCreate(
-                    ['email' => 'kelly@celke.com.br'],
-                    ['name' => 'Kelly', 'email' => 'kelly@celke.com.br', 'password' => '123456A#'],
+                    ['email' => 'admin@gmail.com'],
+                    [
+                        'name' => 'Admin',
+                        'email' => 'admin@gmail.com',
+                        'password' => '123456a'
+                    ],
                 );
 
                 // Atribuir papel para o usuário
                 $admin->assignRole('Admin');
 
                 // Se não encontrar o registro com o e-mail, cadastra o registro no BD
-                $teacher = User::firstOrCreate(
-                    ['email' => 'jessica@celke.com.br'],
-                    ['name' => 'Jessica', 'email' => 'jessica@celke.com.br', 'password' => '123456A#'],
+                $gestor = User::firstOrCreate(
+                    ['email' => 'gestor@gmail.com'],
+                    ['name' => 'Gestor de Estoque', 
+                    'email' => 'gestor@gmail.com', 
+                    'password' => '123456a'],
                 );
 
                 // Atribuir papel para o usuário
-                $teacher->assignRole('Professor');
-                // $teacher->assignRole('Aluno');
+                $gestor->assignRole('Gestor');
+                // $teacher->assignRole('Cliente');
 
                 // Se não encontrar o registro com o e-mail, cadastra o registro no BD
-                $tutor = User::firstOrCreate(
-                    ['email' => 'gabrielly@celke.com.br'],
-                    ['name' => 'Gabrielly', 'email' => 'gabrielly@celke.com.br', 'password' => '123456A#'],
+                $funcionario = User::firstOrCreate(
+                    ['email' => 'funcionario@gmail.com'],
+                    ['name' => 'Funcionário', 
+                    'email' => 'funcionario@gmail.com', 
+                    'password' => '123456a'],
                 );
 
                 // Atribuir papel para o usuário
-                $tutor->assignRole('Tutor');
+                $funcionario->assignRole('Funcionário');
 
                 // Se não encontrar o registro com o e-mail, cadastra o registro no BD
-                $student = User::firstOrCreate(
-                    ['email' => 'ana@celke.com.br'],
-                    ['name' => 'Ana', 'email' => 'ana@celke.com.br', 'password' => '123456A#'],
+                $cliente = User::firstOrCreate(
+                    ['email' => 'cliente@gmail.com'],
+                    ['name' => 'Cliente', 
+                    'email' => 'cliente@gmail.com', 
+                    'password' => '123456A#'],
                 );
 
                 // Atribuir papel para o usuário
-                $student->assignRole('Aluno');
+                $cliente->assignRole('Cliente');
 
                 // Gerar nomes e e-mails aleatórios
                 $faker = Faker::create();
@@ -86,7 +96,7 @@ class UserSeeder extends Seeder
                 // Calcular o total de segundos entre as datas
                 $totalSeconds = $endDate->timestamp - $startDate->timestamp;
 
-                // Cadastrar usuários com papel "Aluno"
+                // Cadastrar usuários com papel "Cliente"
                 for ($i = 0; $i < $totalUsers; $i++) {
                     // Distribuição progressiva (crescimento quadrático)
                     $progress = 1 - pow(($totalUsers - 1 - $i) / ($totalUsers - 1), 2);
@@ -103,9 +113,8 @@ class UserSeeder extends Seeder
                         'created_at' => $createdAt,
                         'updated_at' => $createdAt,
                     ]);
-                    $user->assignRole('Aluno');
+                    $user->assignRole('Cliente');
                 }
-
             }
         } catch (Exception $e) {
             // Salvar log

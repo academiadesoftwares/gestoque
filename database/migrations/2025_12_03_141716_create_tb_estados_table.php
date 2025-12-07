@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('tb_estados', function (Blueprint $table) {
             $table->id();
+            $table->string("designacao_estado")->unique();
             $table->timestamps();
         });
     }

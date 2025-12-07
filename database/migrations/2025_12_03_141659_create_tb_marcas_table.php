@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('tb_marcas', function (Blueprint $table) {
             $table->id();
+            $table->string('designacao_marca')->unique();
             $table->timestamps();
         });
     }

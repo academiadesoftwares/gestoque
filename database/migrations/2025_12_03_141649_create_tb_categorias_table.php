@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tb_categorias', function (Blueprint $table) {
-            $table->id();
+            $table->string('designacao')->unique();
+            $table->text('descricao')->nullable();
+            $table->boolean('status')->default(true); // ativa/desativa categoria
             $table->timestamps();
         });
     }

@@ -1,4 +1,51 @@
+// Importação do seu bootstrap.js (axios, SweetAlert, Chart.js)
 import "./bootstrap";
+
+// jQuery - deve vir antes do DataTables
+import $ from "jquery";
+window.$ = window.jQuery = $;
+
+// Bootstrap JS
+import * as bootstrap from "bootstrap";
+window.bootstrap = bootstrap;
+
+// DataTables (deve vir **após o jQuery**)
+import "datatables.net";
+import "datatables.net-bs5";
+
+//window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+// Inicializar DataTables após o carregamento do DOM
+document.addEventListener("DOMContentLoaded", function () {
+    if ($.fn.DataTable) {
+        $(".datatable").DataTable({
+            language: {
+                info: "Mostrando _START_ até _END_ de _TOTAL_ registros",
+                infoEmpty: "Nenhum registro disponível",
+                infoFiltered: "(filtrado de _MAX_ registros totais)",
+                lengthMenu: "Mostrar _MENU_ registros por página",
+                search: "Pesquisar:",
+                zeroRecords: "Nenhum resultado encontrado",
+                paginate: {
+                    first: "Primeiro",
+                    last: "Último",
+                    next: "Próximo",
+                    previous: "Anterior",
+                },
+            },
+            responsive: true, // Para melhor exibição em dispositivos móveis
+            autoWidth: false, // Evita problemas de largura das colunas
+            order: [], // Remove a ordenação automática da primeira coluna´
+            columnDefs: [
+                { targets: "_all", defaultContent: "-" }, // Evita erro se algum dado estiver faltando
+                { targets: "no-sort", orderable: false }, // Classe CSS para desativar a ordenação em colunas específicas
+                { targets: "text-start", className: "text-start" }, // Força alinhamento à esquerda onde necessário
+            ],
+        });
+    } else {
+        console.error("DataTables não foi carregado corretamente.");
+    }
+});
 
 /**** Script para abrir/fechar o dropdown ****/
 const dropdownButton = document.getElementById("userDropdownButton");
@@ -92,40 +139,35 @@ window.confirmDelete = function (id) {
         if (result.isConfirmed) {
             document.getElementById("delete-form-" + id).submit();
         }
-    }); 
+    });
 };
 
 /****** Academia de softwares estilo******/
 document.addEventListener("DOMContentLoaded", () => {
-        // Todos os botões que controlam dropdowns
-        const dropdownToggles = document.querySelectorAll(
-            "[data-dropdown-toggle]"
-        );
+    // Todos os botões que controlam dropdowns
+    const dropdownToggles = document.querySelectorAll("[data-dropdown-toggle]");
 
-        dropdownToggles.forEach((button) => {
-            const targetId = button.getAttribute("data-dropdown-toggle");
-            const dropdown = document.getElementById(targetId);
-            const icon = button.querySelector("svg");
+    dropdownToggles.forEach((button) => {
+        const targetId = button.getAttribute("data-dropdown-toggle");
+        const dropdown = document.getElementById(targetId);
+        const icon = button.querySelector("svg");
 
-            button.addEventListener("click", (e) => {
-                e.preventDefault();
+        button.addEventListener("click", (e) => {
+            e.preventDefault();
 
-                // Alternar a visibilidade do dropdown
-                dropdown.classList.toggle("hidden");
+            // Alternar a visibilidade do dropdown
+            dropdown.classList.toggle("hidden");
 
-                // Rotacionar ícone
-                icon.classList.toggle("rotate-180");
-            });
+            // Rotacionar ícone
+            icon.classList.toggle("rotate-180");
+        });
 
-            // Fechar ao clicar fora
-            document.addEventListener("click", (e) => {
-                if (
-                    !button.contains(e.target) &&
-                    !dropdown.contains(e.target)
-                ) {
-                    dropdown.classList.add("hidden");
-                    icon.classList.remove("rotate-180");
-                }
-            });
+        // Fechar ao clicar fora
+        document.addEventListener("click", (e) => {
+            if (!button.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.add("hidden");
+                icon.classList.remove("rotate-180");
+            }
         });
     });
+});

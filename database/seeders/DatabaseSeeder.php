@@ -38,6 +38,11 @@ class DatabaseSeeder extends Seeder
                 CourseBatchSeeder::class,
                 ModuleSeeder::class,
                 LessonSeeder::class,
+
+
+                //Seed do sistema de estoque
+                CategoriaSeeder::class,
+                MarcaSeeder::class,
             ]);
         }
     }

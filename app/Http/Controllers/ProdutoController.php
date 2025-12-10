@@ -6,6 +6,7 @@ use App\Models\ModelProduto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Termwind\Components\Dd;
 
 class ProdutoController extends Controller
 {
@@ -20,6 +21,8 @@ class ProdutoController extends Controller
 
     public function store(Request $request)
     {
+        dd($request);
+        exit;
         // Capturar possíveis exceções durante a execução.
         try {
             // Cadastrar no banco de dados na tabela

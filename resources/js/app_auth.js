@@ -1,5 +1,6 @@
 import './bootstrap';
 
+
 /**** Alterna entre tema claro e escuro ****/
 document.addEventListener("DOMContentLoaded", function () {
 

@@ -29,6 +29,7 @@
     </script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 </head>
 
 <body class="bg-dashboard">
@@ -80,7 +81,7 @@
 
 
     </nav>
-    <hr>
+
     <div class="flex">
 
         <!-- Sidebar -->
@@ -403,7 +404,7 @@
                             </a>
                         </div>
                     </div>
-                    <hr class="border-t border-gray-400 my-2">
+                    <hr class="border-t border-gray-200 my-2">
 
                     {{-- MENU CONFIGURAÇÕES ADMINISTRATIVO --}}
                     <div>

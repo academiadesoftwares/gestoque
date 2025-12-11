@@ -18,27 +18,32 @@ class MarcaSeeder extends Seeder
         try {
             // Registrar marcas, evitando duplicidade
             ModelMarca::firstOrCreate(
-                ['designacao_marca' => 'Samsung'], // coluna que define a unicidade
-                [
-                    'descricao' => 'Marca de eletrônicos coreana',
-                    'status' => true
-                ]
+                ['designacao_marca' => 'Samsung'], // coluna que define a unicidade         
+            );
+
+            ModelMarca::firstOrCreate(
+                ['designacao_marca' => 'Apple'], // coluna que define a unicidade        
+            );
+            ModelMarca::firstOrCreate(
+                ['designacao_marca' => 'Sony'], // coluna que define a unicidade           
+            );
+            ModelMarca::firstOrCreate(
+                ['designacao_marca' => 'LG'], // coluna que define a unicidade
+            
+            );
+            ModelMarca::firstOrCreate(
+                ['designacao_marca' => 'Panasonic'], // coluna que define a unicidade
+            );
+            ModelMarca::firstOrCreate(
+                ['designacao_marca' => 'Xiaomi'], // coluna que define a unicidade
             );
 
             ModelMarca::firstOrCreate(
                 ['designacao_marca' => 'Nike'],
-                [
-                    'descricao' => 'Marca de artigos esportivos',
-                    'status' => true
-                ]
             );
 
             ModelMarca::firstOrCreate(
                 ['designacao_marca' => 'Apple'],
-                [
-                    'descricao' => 'Marca de eletrônicos e smartphones',
-                    'status' => true
-                ]
             );
         } catch (Exception $e) {
             Log::notice('Marca não cadastrada.', ['error' => $e->getMessage()]);

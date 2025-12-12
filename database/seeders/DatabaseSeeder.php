@@ -43,6 +43,7 @@ class DatabaseSeeder extends Seeder
                 //Seed do sistema de estoque
                 CategoriaSeeder::class,
                 MarcaSeeder::class,
+                EstadoSeeder::class,
             ]);
         }
     }

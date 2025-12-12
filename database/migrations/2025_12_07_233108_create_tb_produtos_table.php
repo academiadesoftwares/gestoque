@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::create('tb_produtos', function (Blueprint $table) {
             $table->id();
             $table->string('designacao_produto')->unique();
-            $table->text('descricao_produto');
+            $table->text('descricao_produto')->nullable();
             $table->float("preco_produto");
-            $table->integer("quantidade_estoque");
+            $table->integer("quantidade_produto");
 
             //relacionamentos
-            $table->foreignId('categoria_id')->constrained('tb_categorias')->onDelete('cascade');
+           // $table->foreignId('categoria_id')->constrained('tb_categorias')->onDelete('cascade');
             $table->foreignId('marca_id')->constrained('tb_marcas')->onDelete('cascade');
+            $table->foreignId('estado_id')->constrained('tb_estados')->onDelete('cascade');
 
             // Status ENUM
             // $table->enum('status', ['ativo', 'inativo'])->default('ativo');

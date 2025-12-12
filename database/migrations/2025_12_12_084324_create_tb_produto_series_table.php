@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tb_categorias', function (Blueprint $table) {
-            $table->id();
-            $table->string('designacao_categoria')->unique();
-            $table->text('descricao')->nullable();
-            $table->boolean('status')->default(true); // ativa/desativa categoria
+        Schema::create('tb_produto_series', function (Blueprint $table) {
+            $table->foreignId('produto_id')->constrained('tb_produtos')->onDelete('cascade');
+            $table->string('numero_serie')->index();
+            $table->boolean('status')->default(true);
             $table->timestamps();
+            $table->unique(['produto_id', 'numero_serie']);
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tb_categorias');
+        Schema::dropIfExists('tb_produto_series');
     }
 };

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('tb_marcas', function (Blueprint $table) {
             $table->id();
             $table->string('designacao_marca')->unique();
+            $table->foreignId('categoria_id')->constrained('tb_categorias')->onDelete('cascade'); //Pegar o Id da pessoa fisica
             $table->timestamps();
         });
     }

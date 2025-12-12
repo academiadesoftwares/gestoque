@@ -1,3 +1,52 @@
+
+//Validação do Campo Preço 
+document.addEventListener("DOMContentLoaded", function() {
+    const input = document.querySelector('.preco-mask');
+
+    function formatCurrency(value) {
+        // Remove tudo que não é número
+        value = value.replace(/\D/g, '');
+        // Converte para centavos
+        value = (Number(value) / 100).toFixed(2);
+        // Formata para moeda Angolana
+        return value.replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+
+    input.addEventListener('input', function(e) {
+        let cursorPosition = this.selectionStart;
+        let originalLength = this.value.length;
+
+        this.value = 'KZ$ ' + formatCurrency(this.value);
+
+        let newLength = this.value.length;
+        cursorPosition = cursorPosition + (newLength - originalLength);
+        this.setSelectionRange(cursorPosition, cursorPosition);
+    });
+
+    // Inicializa o valor caso esteja vazio
+    if(!input.value) {
+        input.value = 'KZ$ 0,00';
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Receber o seletor do campo preço
 let inputPrice = document.getElementById("price");
 

@@ -171,3 +171,151 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+//Futura definicão dos campos
+//Validação do Campo Preço
+document.addEventListener("DOMContentLoaded", function () {
+    const input = document.querySelector(".preco_kwanza");
+
+    function formatCurrency(value) {
+        value = value.replace(/\D/g, ""); // remove não números
+        value = (Number(value) / 100).toFixed(2); // converte centavos
+        return value.replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    input.addEventListener("input", function (e) {
+        let cursorPosition = this.selectionStart;
+        let originalLength = this.value.length;
+
+        this.value = "KZ$ " + formatCurrency(this.value);
+
+        let newLength = this.value.length;
+        cursorPosition = cursorPosition + (newLength - originalLength);
+        this.setSelectionRange(cursorPosition, cursorPosition);
+    });
+
+    // Inicializa o valor caso esteja vazio
+    if (!input.value) {
+        input.value = "KZ$ 0,00";
+    }
+});
+
+//Mostar Imgame ao fazer upload
+document.addEventListener("DOMContentLoaded", function () {
+    const input = document.getElementById("photoInput");
+    const preview = document.getElementById("photoPreview");
+
+    input.addEventListener("change", function () {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.addEventListener("load", function () {
+                preview.src = reader.result; // substitui a imagem pelo preview
+            });
+
+            reader.readAsDataURL(file);
+        }
+    });
+});
+
+/* *+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+/*                           FILTRAGENS NOS CAMPOS DOS FORMULARIOS                              */
+/* *+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+// SELECIONAR CATEGORIA E MOSTRAR MARCAS DESTA CATEGORIA
+document.addEventListener("DOMContentLoaded", function () {
+    const categoriaSelect = document.getElementById("categoriaSelect");
+    const marcaSelect = document.getElementById("marcaSelect");
+
+    categoriaSelect.addEventListener("change", function () {
+        const categoriaId = this.value;
+
+        Array.from(marcaSelect.options).forEach((option) => {
+            if (option.value === "") return; // mantém o "Selecione"
+            option.style.display =
+                option.dataset.categoria === categoriaId ? "block" : "none";
+        });
+
+        marcaSelect.value = ""; // reseta a seleção
+    });
+});
+
+//SCRIPT PARA GERIR A QUANTIDADE DE ITEM DO PRODUTO E SERIES
+document.addEventListener("DOMContentLoaded", function () {
+    const hasSeriesCheckbox = document.getElementById("hasSeriesCheckbox");
+    const quantidadeBox = document.getElementById("quantidadeBox");
+    const boxSerie = document.getElementById("boxSerie");
+    const estadoGeralBox = document.getElementById("estadoGeralBox");
+
+    const inputSerie = document.getElementById("inputSerie");
+    const inputEstadoSerie = document.getElementById("inputEstadoSerie");
+    const btnAddSerie = document.getElementById("btnAddSerie");
+    const seriesTableBody = document.getElementById("seriesTableBody");
+    const seriesJsonInput = document.getElementById("seriesJson");
+
+    let seriesList = [];
+
+    hasSeriesCheckbox.addEventListener("change", function () {
+        if (this.checked) {
+            boxSerie.style.display = "block";
+            quantidadeBox.style.display = "none";
+            estadoGeralBox.style.display = "none";
+        } else {
+            boxSerie.style.display = "none";
+            quantidadeBox.style.display = "block";
+            estadoGeralBox.style.display = "block";
+        }
+    });
+
+    btnAddSerie.addEventListener("click", function () {
+        const serie = inputSerie.value.trim();
+        const estadoId = inputEstadoSerie.value;
+
+        if (!serie || !estadoId) {
+            alert("Preencha série e estado corretamente.");
+            return;
+        }
+
+        if (seriesList.some((item) => item.serie === serie)) {
+            alert("Este número de série já existe.");
+            return;
+        }
+
+        const estadoText =
+            inputEstadoSerie.options[inputEstadoSerie.selectedIndex].text;
+
+        seriesList.push({
+            serie,
+            estadoId,
+            estadoText,
+        });
+
+        atualizarTabela();
+        inputSerie.value = "";
+        inputEstadoSerie.value = "";
+    });
+
+    function atualizarTabela() {
+        seriesTableBody.innerHTML = "";
+        seriesList.forEach((item, index) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td class="p-2">${index + 1}</td>
+                <td class="p-2">${item.serie}</td>
+                <td class="p-2">${item.estadoText}</td>
+                <td class="p-2">
+                    <button type="button" class="px-2 py-1 bg-red-500 text-white rounded" onclick="removerSerie(${index})">Remover</button>
+                </td>
+            `;
+            seriesTableBody.appendChild(row);
+        });
+
+        seriesJsonInput.value = JSON.stringify(seriesList);
+    }
+
+    window.removerSerie = function (index) {
+        seriesList.splice(index, 1);
+        atualizarTabela();
+    };
+});

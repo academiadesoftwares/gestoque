@@ -54,8 +54,6 @@
                 </svg>
                 <span>Cadastrar</span>
             </button>
-
         </form>
-
     </div>
 @endsection

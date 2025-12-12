@@ -17,11 +17,10 @@
 
 <div class="content-box">
     <div class="content-box-header">
-        <h5 class="content-box-title">cadastrar</h5>
-
+        <h3 class="content-box-title">Cadastrar</h3>
         <div class="content-box-btn">
             @can('index-produto')
-            <a href="#" class="btn-info align-icon-btn">
+            <a href="{{ route('produtos.index') }}" class="btn-info align-icon-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-5">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -35,140 +34,229 @@
 
     <x-alert />
 
-    {{-- Abas --}}
     <div class="w-full">
         <div class="flex flex-col md:flex-row gap-4">
-
-            <!-- TABS + CONTEÚDO -->
             <div class="flex-1">
-                <!-- Cabeçalho das Tabs -->
-                <ul class="flex flex-wrap px-1.5 py-1.5 list-none rounded-md bg-slate-100" role="tablist">
-                    <li class="flex-auto text-center">
-                        <button class="w-full px-4 py-2 text-sm font-medium text-slate-700 rounded-t-md transition-colors bg-white shadow-sm"
-                            data-tab-index="0" role="tab" aria-selected="true">
-                            Aba 1
-                        </button>
-                    </li>
-                    <li class="flex-auto text-center">
-                        <button class="w-full px-4 py-2 text-sm font-medium text-slate-600 rounded-t-md transition-colors hover:text-slate-700"
-                            data-tab-index="1" role="tab" aria-selected="false">
-                            Aba 2
-                        </button>
-                    </li>
-                </ul>
+                <form method="POST" action="{{ route('produto.store') }}">
+                    @csrf
+                    @method('POST')
+                    <div class="p-5 bg-white rounded-md shadow-sm space-y-8">
 
-                <!-- Conteúdo das Tabs -->
-                <div class="relative p-5 bg-white rounded-b-md shadow-sm mt-1 space-y-4" data-tab-content>
-                    <!-- Tab 1 -->
-                    <div class="tab-panel flex gap-4" data-index="0">
-                        <!-- Campos principais (grid 4x1) -->
-                        <div class="flex-1 space-y-4">
-                            <div class="grid grid-cols-4 gap-4">
-                                <div class="mb-4">
-                                    <label for="name" class="label-personalized">Designação Produto</label>
-                                    <input type="text" placeholder="aba 1 Campo 1" class="form-personalized">
-                                </div>
-                                <div class="mb-4">
-                                    <label for="name" class="label-personalized">Tipo</label>
-                                    <input type="text" placeholder="aba 1 Campo 2" class="form-personalized">
-                                </div>
-                                <div class="mb-4">
-                                    <label for="name" class="label-personalized">Marca</label>
-                                    <input type="text" placeholder="aba 1 Campo 3" class="form-personalized">
-                                </div>
-                                <div class="mb-4">
-                                    <label for="name" class="label-personalized">Preço</label>
-                                    <input type="text" placeholder="aba 1 Campo 4" class="form-personalized">
-                                </div>            
+                        <!-- GRID PRINCIPAL -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                            <div>
+                                <label class="label-personalized">Designação</label>
+                                <input type="text" name="descricao_produto" class="form-personalized" placeholder="Digite o nome do produto">
                             </div>
-                            <!-- Botões -->
-                            <div class="flex justify-end mt-4 gap-2">
-                                <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 next-btn">Próximo</button>
+
+                            <div>
+                                <label class="label-personalized">Categoria</label>
+                                <select id="categoriaSelect" name="" class="form-personalized">
+                                    <option value="" selected disabled>Selecione</option>
+                                    @foreach($list_categorias as $categoria)
+                                    <option value="{{ $categoria->id }}">{{ $categoria->designacao_categoria }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="label-personalized">Marca</label>
+                                <select id="marcaSelect" name="marca_id" class="form-personalized">
+                                    <option value="" selected disabled>Selecione uma categoria primeiro</option>
+                                    @foreach($list_marcas as $marca)
+                                    <option value="{{ $marca->id }}" data-categoria="{{ $marca->categoria_id }}" style="display:none;">
+                                        {{ $marca->designacao_marca }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="label-personalized">Preço</label>
+                                <input type="text" name="preco_kwanza" class="form-personalized preco_kwanza" placeholder="KZ$ 0,00">
                             </div>
                         </div>
 
-                        <!-- AVATAR / CANTO DIREITO (apenas na primeira aba) -->
-                        <div class="w-40 flex flex-col items-center space-y-3">
-                            <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                                class="w-36 h-36 rounded-full object-cover shadow-md">
-                            <input type="file" class="form-input text-sm text-center">
-                            <div class="w-full bg-white shadow rounded p-2 text-center">
-                                <a href="#" class="text-blue-600 hover:underline">example.com</a>
+                        <!-- GRID QUANTIDADE + ESTADO GERAL + CHECKBOX -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 items-end">
+
+                            <div id="quantidadeBox">
+                                <label for="quantidade_prod" class="label-personalized">Quantidade</label>
+                                <input type="number" min="1" name="quantidade_prod" class="form-personalized" placeholder="Ex: 5">
+                            </div>
+
+                            <div id="estadoGeralBox">
+                                <label class="label-personalized">Estado</label>
+                                <select name="estado_produto" class="form-personalized">
+                                    <option value="" selected disabled>Selecione</option>
+                                    @foreach($list_estados as $estado)
+                                    <option value="{{ $estado->id }}">{{ $estado->designacao_estado }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <!-- Checkbox ocupa linha inteira em telas pequenas -->
+                            <div class="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 flex items-center gap-3">
+                                <label class="flex items-center space-x-3">
+                                    <input type="checkbox" id="hasSeriesCheckbox" name="has_series" value="1">
+                                    <span>Este produto tem número de série?</span>
+                                </label>
                             </div>
                         </div>
+
+                        <!-- GRID SÉRIE + ESTADO POR SÉRIE -->
+                        <div id="boxSerie" style="display:none;" class="space-y-5">
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 items-end">
+
+                                <div>
+                                    <label class="label-personalized">Nº de Série</label>
+                                    <input type="text" id="inputSerie" class="form-personalized" placeholder="Digite a série">
+                                </div>
+
+                                <div>
+                                    <label class="label-personalized">Estado</label>
+                                    <select id="inputEstadoSerie" class="form-personalized">
+                                        <option value="" selected disabled>Selecione</option>
+                                        @foreach($list_estados as $estado)
+                                        <option value="{{ $estado->id }}">{{ $estado->designacao_estado }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="flex sm:col-span-2 md:col-span-1">
+                                    <button type="button" id="btnAddSerie"
+                                        class="px-4 py-2 bg-gray-700 hover:bg-gray-800 text-white rounded w-full sm:w-auto mt-6">
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- TABELA -->
+                            <div class="overflow-x-auto">
+                                <table class="w-full border-collapse text-left">
+                                    <thead>
+                                        <tr class="bg-gray-100">
+                                            <th class="p-2">#</th>
+                                            <th class="p-2">Número de Série</th>
+                                            <th class="p-2">Estado</th>
+                                            <th class="p-2">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="seriesTableBody"></tbody>
+                                </table>
+                            </div>
+
+                            <input type="hidden" name="series_json" id="seriesJson">
+                        </div>
+
+                        <!-- BOTÃO FINAL -->
+                        <div class="flex justify-end">
+                            <button type="submit" class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded">
+                                Salvar
+                            </button>
+                        </div>
+
                     </div>
 
-
-                    <!-- Tab 2 -->
-                    <div class="tab-panel hidden opacity-0" data-index="1">
-                        <div class="grid grid-cols-4 gap-4">
-                            <input type="text" placeholder="Aba 2 Outro 1" class="form-input">
-                            <input type="text" placeholder="Aba 2 Outro 2" class="form-input">
-                            <input type="text" placeholder="Aba 2 Outro 3" class="form-input">
-                            <input type="text" placeholder="Aba 2 Outro 4" class="form-input">
-                        </div>
-
-                        <!-- Botões -->
-                        <div class="flex justify-between mt-4">
-                            <button class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 prev-btn">Anterior</button>
-                            <div class="ml-auto flex gap-2">
-                                <button class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">Salvar</button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const tabs = document.querySelectorAll('[data-tab-index]');
-            const tabPanels = document.querySelectorAll('.tab-panel');
+<script>
 
-            let currentTab = 0;
+</script>
 
-            function showTab(index) {
-                tabPanels.forEach((panel, i) => {
-                    panel.classList.toggle('hidden', i !== index);
-                    panel.classList.toggle('opacity-0', i !== index);
-                });
 
-                tabs.forEach((tab, i) => {
-                    tab.classList.toggle('bg-white', i === index);
-                    tab.classList.toggle('shadow-sm', i === index);
-                    tab.classList.toggle('text-slate-700', i === index);
-                    tab.classList.toggle('text-slate-600', i !== index);
-                    tab.setAttribute('aria-selected', i === index ? 'true' : 'false');
-                });
+@endsection
 
-                currentTab = index;
+
+
+<select id="categoriaSelect" name="" class="form-personalized">
+if ($produto > 0) {
+    ModelProdutoSerie::created([
+        'produto_id' => $request->produto_id,
+        'numero_serie' => $request->seriesJson,
+    ]);
+}
+namespace App\Http\Controllers;
+
+use App\Http\Requests\ProdutoRequest;
+use App\Models\ModelProduto;
+use App\Models\ModelProdutoSerie;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
+class ProdutoController extends Controller
+{
+    public function create()
+    {
+        return view('produtos.create', ['menu' => 'produtos']);
+    }
+
+    public function store(ProdutoRequest $request)
+    {
+        try {
+            // Salvar o produto
+            $produto = ModelProduto::create([
+                'designacao_produto' => $request->descricao_produto,
+                'preco_produto'      => $request->preco_kwanza,
+                'quantidade_produto' => $request->quantidade_prod,
+                'categoria_id'       => $request->categoria_id,
+                'marca_id'           => $request->marca_id,
+                'estado_id'          => $request->estado_produto,
+            ]);
+
+            // Salvar séries do produto, se existirem
+            if ($request->has_series && $request->series_json) {
+                $seriesList = json_decode($request->series_json, true);
+                foreach ($seriesList as $serie) {
+                    ModelProdutoSerie::create([
+                        'produto_id'    => $produto->id,
+                        'numero_serie'  => $serie['serie'],
+                        'estado_id'     => $serie['estado'], // se tiver relação com estado
+                        'status'        => true,
+                    ]);
+                }
             }
 
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    showTab(parseInt(tab.dataset.tabIndex));
-                });
-            });
+            Log::info('Produto cadastrado.', [
+                'produto_id' => $produto->id,
+                'user_id'    => Auth::id()
+            ]);
 
-            // Botões Próximo / Anterior
-            document.querySelectorAll('.next-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    if (currentTab < tabPanels.length - 1) showTab(currentTab + 1);
-                });
-            });
+            return redirect()->route('produtos.show', $produto->id)
+                             ->with('success', 'Produto cadastrado com sucesso!');
 
-            document.querySelectorAll('.prev-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    if (currentTab > 0) showTab(currentTab - 1);
-                });
-            });
-
-            // Inicializa primeira aba
-            showTab(0);
-        });
-    </script>
-
-</div>
-@endsection
+        } catch (\Throwable $th) {
+            Log::error('Erro ao cadastrar produto', ['error' => $th->getMessage()]);
+            return back()->withErrors('Erro ao cadastrar produto. Tente novamente.');
+        }
+    }
+}
+<select id="categoriaSelect" name="categoria_id" class="form-personalized">
+    <option value="" selected disabled>Selecione</option>
+    @foreach($list_categorias as $categoria)
+        <option value="{{ $categoria->id }}">{{ $categoria->designacao_categoria }}</option>
+    @endforeach
+</select>
+<input type="number" min="1" name="quantidade_prod" class="form-personalized" placeholder="Ex: 5">
+<select name="estado_produto" class="form-personalized">
+    <option value="" selected disabled>Selecione</option>
+    @foreach($list_estados as $estado)
+        <option value="{{ $estado->id }}">{{ $estado->designacao_estado }}</option>
+    @endforeach
+</select>
+public function rules()
+{
+    return [
+        'descricao_produto' => 'required|string|max:255',
+        'preco_kwanza'      => 'required|numeric',
+        'quantidade_prod'   => 'required|integer|min:1',
+        'categoria_id'      => 'required|exists:tb_categorias,id',
+        'marca_id'          => 'required|exists:tb_marcas,id',
+        'estado_produto'    => 'required|exists:tb_estados,id',
+    ];
+}

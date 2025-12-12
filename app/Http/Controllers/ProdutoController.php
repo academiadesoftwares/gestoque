@@ -1,47 +1,55 @@
-<?php
-
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProdutoRequest;
 use App\Models\ModelProduto;
-use Illuminate\Http\Request;
+use App\Models\ModelProdutoSerie;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Termwind\Components\Dd;
 
 class ProdutoController extends Controller
 {
-    //
-
-    // Carregar o formulário cadastrar 
     public function create()
     {
-        // Carregar a view 
         return view('produtos.create', ['menu' => 'produtos']);
     }
 
-    public function store(Request $request)
+    public function store(ProdutoRequest $request)
     {
-        dd($request);
-        exit;
-        // Capturar possíveis exceções durante a execução.
         try {
-            // Cadastrar no banco de dados na tabela
-            $produto = ModelProduto::create(
-                [
-                    "designacao_produto" => $request->designacao,
-                    "descricao_produto" => $request->descricao,
-                    "preco_produto" => $request->preco,
-                    "quantidade_estoque" => $request->quantidade
-                ]
-            );
+            // Salvar o produto
+            $produto = ModelProduto::create([
+                'designacao_produto' => $request->descricao_produto,
+                'preco_produto'      => $request->preco_kwanza,
+                'quantidade_produto' => $request->quantidade_prod,
+                'categoria_id'       => $request->categoria_id,
+                'marca_id'           => $request->marca_id,
+                'estado_id'          => $request->estado_produto,
+            ]);
 
-            // Salvar log
-            Log::info('Produto cadastrado.', ['produto_id' => $produto->id, 'action_user_id' => Auth::id()]);
+            // Salvar séries do produto, se existirem
+            if ($request->has_series && $request->series_json) {
+                $seriesList = json_decode($request->series_json, true);
+                foreach ($seriesList as $serie) {
+                    ModelProdutoSerie::create([
+                        'produto_id'    => $produto->id,
+                        'numero_serie'  => $serie['serie'],
+                        'estado_id'     => $serie['estado'], // se tiver relação com estado
+                        'status'        => true,
+                    ]);
+                }
+            }
 
-            // Redirecionar o usuário, enviar a mensagem de sucesso
-            return redirect()->route('produtos.show', ['Produto' => $produto->id])->with('success', 'Produto cadastrado com sucesso!');
+            Log::info('Produto cadastrado.', [
+                'produto_id' => $produto->id,
+                'user_id'    => Auth::id()
+            ]);
+
+            return redirect()->route('produtos.show', $produto->id)
+                             ->with('success', 'Produto cadastrado com sucesso!');
+
         } catch (\Throwable $th) {
-            //throw $th;
+            Log::error('Erro ao cadastrar produto', ['error' => $th->getMessage()]);
+            return back()->withErrors('Erro ao cadastrar produto. Tente novamente.');
         }
     }
 }

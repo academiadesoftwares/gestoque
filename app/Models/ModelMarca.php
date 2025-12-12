@@ -13,4 +13,10 @@ class ModelMarca extends Model implements Auditable
     protected $table = 'tb_marcas';
     // Permite preencher todos os campos 
     protected $guarded = [];
+
+    public function relation_categoria()
+    {
+        return $this->belongsTo(ModelCategoria::class, 'categoria_id');
+    }
 }
+ 

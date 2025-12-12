@@ -55,7 +55,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // GESTÃO DO PRODUTO
     Route::prefix('produto')->group(function () {
-        Route::get('/', [ProdutoController::class, 'index'])->name('produto.index')->middleware('permission:index-produto');
+        Route::get('/', [ProdutoController::class, 'index'])->name('produtos.index')->middleware('permission:index-produtos');
         Route::get('/create', [ProdutoController::class, 'create'])->name('produto.create')->middleware('permission:create-produto');
         Route::get('/{produto}', [ProdutoController::class, 'show'])->name('produto.show')->middleware('permission:show-produto');
         Route::post('/', [ProdutoController::class, 'store'])->name('produto.store')->middleware('permission:create-produto');

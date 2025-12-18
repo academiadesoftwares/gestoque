@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
                 $superAdmin = User::create([
                     'name' => 'Academia de Softwares',
                     'email' => 'academiadesoftwares@gmail.com',
-                    'password' => '123456a',
+                    'password' => bcrypt('123456a')
                 ]);
 
                 // Atribuir papel para o usuário
@@ -40,8 +40,8 @@ class UserSeeder extends Seeder
                     [
                         'name' => 'Admin',
                         'email' => 'admin@gmail.com',
-                        'password' => '123456a'
-                    ],
+                        'password' => bcrypt('123456a')
+                    ]
                 );
 
                 // Atribuir papel para o usuário
@@ -52,7 +52,8 @@ class UserSeeder extends Seeder
                     ['email' => 'gestor@gmail.com'],
                     ['name' => 'Gestor de Estoque', 
                     'email' => 'gestor@gmail.com', 
-                    'password' => '123456a'],
+                    'password' => bcrypt('123456a')
+                    ]
                 );
 
                 // Atribuir papel para o usuário
@@ -64,7 +65,8 @@ class UserSeeder extends Seeder
                     ['email' => 'funcionario@gmail.com'],
                     ['name' => 'Funcionário', 
                     'email' => 'funcionario@gmail.com', 
-                    'password' => '123456a'],
+                    'password' => bcrypt('123456a')
+                    ]
                 );
 
                 // Atribuir papel para o usuário
@@ -75,7 +77,8 @@ class UserSeeder extends Seeder
                     ['email' => 'cliente@gmail.com'],
                     ['name' => 'Cliente', 
                     'email' => 'cliente@gmail.com', 
-                    'password' => '123456A#'],
+                    'password' => bcrypt('123456a')
+                    ]
                 );
 
                 // Atribuir papel para o usuário
@@ -109,7 +112,7 @@ class UserSeeder extends Seeder
                     $user = User::create([
                         'name' => $faker->name,
                         'email' => $faker->unique()->safeEmail, // Garantir que cada e-mail seja único.
-                        'password' => '123456A#', // Caso seja necessário forçar a criptografia da senha 'password' => bcrypt('123456A#'),
+                        'password' => bcrypt('123456a'), // Caso seja necessário forçar a criptografia da senha 'password' => bcrypt('123456A#'),
                         'created_at' => $createdAt,
                         'updated_at' => $createdAt,
                     ]);

@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('tb_produtos', function (Blueprint $table) {
             $table->id();
-            $table->string('designacao_produto')->unique();
+            $table->string('designacao_produto');
             $table->text('descricao_produto')->nullable();
-            $table->float("preco_produto");
-            $table->integer("quantidade_produto");
+            $table->float("preco_produto")->nullable();
+            $table->integer("quantidade_produto")->nullable();
 
             //relacionamentos
            // $table->foreignId('categoria_id')->constrained('tb_categorias')->onDelete('cascade');

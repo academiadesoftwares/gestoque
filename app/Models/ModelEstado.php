@@ -10,5 +10,5 @@ class ModelEstado extends Model
     protected $table ='tb_estados';
 
     //guardar todos campos
-    protected $fillable = [];
+    protected $guarded = [];
 }

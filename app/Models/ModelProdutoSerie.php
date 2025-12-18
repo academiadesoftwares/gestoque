@@ -13,7 +13,7 @@ class ModelProdutoSerie extends Model implements Auditable
     protected $table = 'tb_produto_series';
 
     //
-    protected $fillable = [];
+    protected $guarded = [];
 
     public function relation_produto()
     {

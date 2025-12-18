@@ -12,10 +12,36 @@ class ModelProduto extends Model implements Auditable
   protected $table = 'tb_produtos';
 
   //guardar todos dados
-  protected $fillable = [];
+  protected $guarded = [];
+
+ 
+public function setPrecoProdutoAttribute($value)
+{
+    if ($value) {
+        $valor = str_replace(['KZ$', '.', ' '], '', $value);
+        $valor = str_replace(',', '.', $valor);
+        $this->attributes['preco_produto'] = (float) $valor;
+    }
+}
+
+
 
   public function relation_series()
   {
     return $this->hasMany(ModelProdutoSerie::class, 'produto_id');
   }
+
+    // Relacao marca e produto
+  public function relation_marca()
+  {
+      return $this->belongsTo(ModelMarca::class, 'marca_id');
+  }
+
+    public function relation_estado()
+  {
+      return $this->belongsTo(ModelEstado::class, 'estado_id');
+  }
+
+
+
 }

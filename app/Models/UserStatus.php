@@ -10,7 +10,7 @@ class UserStatus extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
     
     // Indicar o nome da tabela
-    protected $table = 'User_statuses';
+    protected $table = 'user_statuses';
 
     // Indicar quais colunas podem ser manipuladas
     protected $fillable = ['name'];
